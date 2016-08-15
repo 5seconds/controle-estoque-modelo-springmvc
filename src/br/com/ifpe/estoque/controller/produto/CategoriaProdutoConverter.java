@@ -13,7 +13,6 @@ public class CategoriaProdutoConverter implements Converter<String, CategoriaPro
     public CategoriaProduto convert(String id) {
 
 	if (!id.equals("")) {
-
 	    CategoriaProdutoDao dao = new CategoriaProdutoDao();
 	    return dao.buscarPorId(Integer.valueOf(id));
 	} else {
