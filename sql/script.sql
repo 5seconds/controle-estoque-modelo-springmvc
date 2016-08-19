@@ -87,3 +87,10 @@ INSERT INTO cidade (estado_id, nome, habilitado) VALUES(5,'Salvador',true);
 INSERT INTO cidade (estado_id, nome, habilitado) VALUES(6,'Belem',true);
 INSERT INTO cidade (estado_id, nome, habilitado) VALUES(7,'Belo Horizonte',true);
 
+---------------------------------------------------------------------------------------
+
+INSERT INTO usuario (id, nome, email, login, senha) VALUES(1, 'Administrador', 'admin@admin.com.br', 'admin', 'admin');
+
+
+
+
