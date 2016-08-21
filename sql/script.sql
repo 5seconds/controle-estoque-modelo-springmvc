@@ -64,6 +64,10 @@ CREATE TABLE empresa (
 ---------------------------------------------------------------------------------------
 
 
+ALTER TABLE produto ADD COLUMN categoria_id int;
+ALTER TABLE produto ADD CONSTRAINT fk_categoria_produto FOREIGN KEY (categoria_id) REFERENCES categoria_produto(id);
+
+
 ALTER TABLE cidade ADD CONSTRAINT fk_cidade_estado FOREIGN KEY (estado_id) REFERENCES estado(id);
 ALTER TABLE empresa ADD CONSTRAINT fk_empresa_cidade FOREIGN KEY (cidade_id) REFERENCES cidade(id);
 
