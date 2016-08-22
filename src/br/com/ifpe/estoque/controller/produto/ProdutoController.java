@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.ifpe.estoque.model.empresa.ProdutoHibernateDao;
 import br.com.ifpe.estoque.model.produto.CategoriaProduto;
 import br.com.ifpe.estoque.model.produto.CategoriaProdutoDao;
 import br.com.ifpe.estoque.model.produto.Produto;
-import br.com.ifpe.estoque.model.produto.ProdutoDao;
 import br.com.ifpe.estoque.util.Util;
 
 @Controller
@@ -39,7 +39,8 @@ public class ProdutoController {
 	    produto.setImagem(Calendar.getInstance().getTime() + " - " + imagem.getOriginalFilename());
 	}
 
-	ProdutoDao dao = new ProdutoDao();
+	// ProdutoDao dao = new ProdutoDao();
+	ProdutoHibernateDao dao = new ProdutoHibernateDao();
 	dao.salvar(produto);
 	model.addAttribute("msg", "O Produto " + produto.getDescricao() + " foi Inserido com Sucesso !");
 
@@ -54,7 +55,8 @@ public class ProdutoController {
 	List<CategoriaProduto> listaCategoriaProduto = dao.listar();
 	model.addAttribute("listaCategoriaProduto", listaCategoriaProduto);
 
-	ProdutoDao dao2 = new ProdutoDao();
+	//ProdutoDao dao2 = new ProdutoDao();
+	ProdutoHibernateDao dao2 = new ProdutoHibernateDao();
 	List<Produto> listaProduto = dao2.listar();
 	model.addAttribute("listaProduto", listaProduto);
 
@@ -65,7 +67,8 @@ public class ProdutoController {
     public @ResponseBody String pesquisarProduto(@RequestParam String descricao, @RequestParam Integer idCategoria,
 	    HttpServletResponse response) {
 
-	ProdutoDao dao = new ProdutoDao();
+	//ProdutoDao dao = new ProdutoDao();
+	ProdutoHibernateDao dao = new ProdutoHibernateDao();
 	List<Produto> listaProduto = dao.pesquisar(descricao, idCategoria);
 
 	StringBuilder st = new StringBuilder();
@@ -84,14 +87,17 @@ public class ProdutoController {
 	for (Produto produto : listaProduto) {
 	    st.append("<tr>");
 	    st.append("<td style='vertical-align: middle; text-align: center;'> " + produto.getCodigo() + " </td>");
-	    st.append("<td style='vertical-align: middle;'> " + produto.getCategoriaProduto().getDescricao() + " </td>");
+	    st.append(
+		    "<td style='vertical-align: middle;'> " + produto.getCategoriaProduto().getDescricao() + " </td>");
 	    st.append("<td style='vertical-align: middle;'> " + produto.getDescricao() + " </td>");
 	    st.append("<td style='vertical-align: middle; text-align: center;'> " + produto.getPrecoCusto() + " </td>");
 	    st.append("<td style='vertical-align: middle; text-align: center;'> " + produto.getPrecoVenda() + " </td>");
 	    st.append("<td style='vertical-align: middle; text-align: center;'> " + produto.getQuantidade() + " </td>");
-	    st.append("<td style='vertical-align: middle; text-align: center;'> <img src='view/img/" + produto.getImagem() + "'> </td>");
+	    st.append("<td style='vertical-align: middle; text-align: center;'> <img src='view/img/"
+		    + produto.getImagem() + "'> </td>");
 	    st.append("<td style='vertical-align: middle; text-align: center;'>");
-	    st.append("<a href='exibirAlterarProduto?id=" + produto.getId() + "' class='btn btn-warning' role='button'>E</a> &nbsp;");
+	    st.append("<a href='exibirAlterarProduto?id=" + produto.getId()
+		    + "' class='btn btn-warning' role='button'>E</a> &nbsp;");
 	    st.append("<a href='removerProduto?id=" + produto.getId() + "' class='btn btn-danger' role='button'>R</a>");
 	    st.append("</td>");
 	    st.append("</tr>");
@@ -104,8 +110,9 @@ public class ProdutoController {
     @RequestMapping("removerProduto")
     public String removerProduto(Produto produto, Model model) {
 
-	ProdutoDao dao = new ProdutoDao();
-	dao.remover(produto);
+	//ProdutoDao dao = new ProdutoDao();
+	ProdutoHibernateDao dao = new ProdutoHibernateDao();
+	dao.remover(produto.getId());
 	model.addAttribute("msg", "Produto Removido com Sucesso !");
 
 	return "forward:listarProduto";
@@ -119,8 +126,9 @@ public class ProdutoController {
 	List<CategoriaProduto> listaCategoriaProduto = dao1.listar();
 	model.addAttribute("listaCategoriaProduto", listaCategoriaProduto);
 
-	ProdutoDao dao2 = new ProdutoDao();
-	Produto produtoPreenchido = dao2.buscarPorId(produto.getId());
+	// ProdutoDao dao2 = new ProdutoDao();
+	ProdutoHibernateDao dao2 = new ProdutoHibernateDao();
+	Produto produtoPreenchido = (Produto) dao2.buscarPorId(produto.getId());
 	model.addAttribute("p", produtoPreenchido);
 
 	return "produto/alterarProduto";
@@ -129,7 +137,8 @@ public class ProdutoController {
     @RequestMapping("alterarProduto")
     public String alterarProduto(Produto produto, Model model) {
 
-	ProdutoDao dao = new ProdutoDao();
+	//ProdutoDao dao = new ProdutoDao();
+	ProdutoHibernateDao dao = new ProdutoHibernateDao();
 	dao.alterar(produto);
 	model.addAttribute("msg", "Produto Alterado com Sucesso !");
 

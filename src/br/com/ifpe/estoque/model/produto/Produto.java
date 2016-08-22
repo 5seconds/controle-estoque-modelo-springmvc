@@ -2,31 +2,50 @@ package br.com.ifpe.estoque.model.produto;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author Roberto Alencar
  *
  */
+@Entity
+@Table(name = "produto")
 public class Produto {
 
+    @Id
     private int id;
 
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
     private CategoriaProduto categoriaProduto;
 
+    @Column
     private String codigo;
 
+    @Column
     private String descricao;
 
+    @Column(name = "preco_custo")
     private double precoCusto;
 
+    @Column(name = "preco_venda")
     private double precoVenda;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Column
     private Date garantia;
 
+    @Column
     private int quantidade;
 
+    @Column
     private String imagem;
 
     public int getId() {
