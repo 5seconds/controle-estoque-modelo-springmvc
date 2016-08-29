@@ -131,8 +131,11 @@
 					</tr>
 				</c:forEach>
 			</table>
+			<c:if test="${listaProduto.size() == 0}">
+				Não foram encontrados registros.
+			</c:if>
 		</div>
-			
+		
 	</div>
 	
 	<br />
